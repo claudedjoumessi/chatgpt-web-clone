@@ -1,8 +1,9 @@
+import { ChatLayout } from '@/components/chat'
 import React from 'react'
 
 const Chat = () => {
   return (
-    <div>Chat</div>
+    <ChatLayout />
   )
 }
 
