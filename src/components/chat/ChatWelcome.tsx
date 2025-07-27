@@ -13,10 +13,19 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { Ellipsis, Plus, Settings2, Upload } from "lucide-react";
+import {
+  Ellipsis,
+  Upload,
+} from "lucide-react";
 import { Button } from "../ui/button";
+import React from "react";
+import ChatInput from "./ChatInput";
 
-export default function ChatLayout() {
+type ChatWelcomeProps = {
+  onSend?: (message: string) => void;
+};
+
+export default function ChatWelcome({ onSend }: ChatWelcomeProps) {
   return (
     <SidebarProvider>
       <ChatSidebar />
@@ -70,24 +79,16 @@ export default function ChatLayout() {
             </div>
           </div>
         </header>
-        <main className="flex h-full w-full flex-col items-center mt-[25dvh]">
-          <div className="w-full max-w-3xl text-center mb-5">
-            <h1 className="text-2xl md:text-3xl">
-              What's on your mind today, Alex
-            </h1>
-          </div>
-          <div className="w-full max-w-3xl">
-            <div className="flex relative">
-              <div className="w-full">
-                <textarea
-                  className="w-full h-25 p-5 mt-4 rounded-3xl focus:outline-none resize-none bg-zinc-900"
-                  placeholder="Type your message here..."
-                />
-              </div>
-              <div className="w-full absolute bottom-0 flex items-center gap-2 p-4">
-                <div className="flex">
-                  
-                </div>
+        <main className="flex justify-center">
+          <div className="max-w-2xl m-10 flex h-full w-full flex-col items-center mt-[28dvh]">
+            <div className="w-full max-w-3xl text-center mb-10">
+              <h1 className="text-2xl md:text-3xl">
+                What's on your mind today, Alex
+              </h1>
+            </div>
+            <div className="w-full">
+              <div className="w-full flex relative p-1 rounded-3xl">
+                <ChatInput onSend={onSend} props={{ autoFocus: true }} />
               </div>
             </div>
           </div>
