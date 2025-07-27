@@ -20,9 +20,10 @@ import type { Message } from "./ChatMessage";
 type ChatSessionProps = {
   messages: Message[];
   onSend?: (message: Message) => void;
+  isLoading?: boolean;
 };
 
-export default function ChatSession({ messages, onSend }: ChatSessionProps) {
+export default function ChatSession({ messages, onSend, isLoading }: ChatSessionProps) {
   const fakeMessages: Message[] = [
     {
       role: "user",
@@ -184,7 +185,7 @@ export default function ChatSession({ messages, onSend }: ChatSessionProps) {
             </div>
           </section>
           <div className="max-w-2xl w-full fixed bottom-0 mb-5">
-            <ChatInput onSend={onSend} props={{ autoFocus: true }} />
+            <ChatInput onSend={onSend} props={{ autoFocus: true }} loading={isLoading} />
           </div>
         </main>
       </SidebarInset>

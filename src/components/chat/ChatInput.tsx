@@ -25,10 +25,12 @@ import type { Message } from "./ChatMessage";
 
 type ChatInputProps = {
   onSend?: (message: Message) => void;
+  loading?: boolean;
+  // Additional props for the textarea
   props?: React.ComponentProps<"textarea">
 };
 
-const ChatInput = ({ onSend, props }: ChatInputProps) => {
+const ChatInput = ({ onSend, loading, props }: ChatInputProps) => {
   const [textAreaVal, setTextAreaVal] = React.useState("");
   const textAreaRef = React.useRef<HTMLTextAreaElement>(null);
 
@@ -40,9 +42,10 @@ const ChatInput = ({ onSend, props }: ChatInputProps) => {
 
   const handleSend = () => {
     if(textAreaVal.trim() === "") return;
-    onSend?.(initialMessage);
     setTextAreaVal("");
     textAreaRef.current?.focus();
+    
+    onSend?.(initialMessage);
   }
 
   return (
@@ -157,6 +160,7 @@ const ChatInput = ({ onSend, props }: ChatInputProps) => {
           <Button
             variant="ghost"
             className="flex items-center gap-2 rounded-lg h-full aspect-square"
+            disabled={loading}
           >
             <span className="sr-only">Voice Input</span>
             <AudioLines />

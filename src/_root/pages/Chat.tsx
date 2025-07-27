@@ -5,9 +5,11 @@ import React from "react";
 
 const Chat = () => {
   const [messages, setMessages] = React.useState<Message[]>([]);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const handleSend = (message: Message) => {
     setMessages((prev) => [...prev, message]);
+    setIsLoading(true);
     console.log("Message sent:", message);
     
     // Simulate sending the message to an API or processing it
@@ -17,7 +19,8 @@ const Chat = () => {
         content: `You said: "${message.content}" 🤖`,
       };
       setMessages((prev) => [...prev, reply]);
-    }, 2000);
+      setIsLoading(false);
+    }, 2500);
   };
 
   return (
@@ -25,7 +28,7 @@ const Chat = () => {
       {messages.length === 0 ? (
         <ChatWelcome onSend={handleSend} />
       ) : (
-        <ChatSession messages={messages} onSend={handleSend} />
+        <ChatSession messages={messages} onSend={handleSend} isLoading={isLoading} />
       )}
     </>
   );
