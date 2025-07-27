@@ -8,7 +8,7 @@ import RootLayout from "./_root/RootLayout";
 
 function App() {
   return (
-    <main className="h-screen w-screen">
+    <main>
       <Routes>
         {/* Public Routes */}
         <Route element={<AuthLayout />}>

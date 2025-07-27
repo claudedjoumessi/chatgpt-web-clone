@@ -20,9 +20,10 @@ import {
 import { Button } from "../ui/button";
 import React from "react";
 import ChatInput from "./ChatInput";
+import type { Message } from "./ChatMessage";
 
 type ChatWelcomeProps = {
-  onSend?: (message: string) => void;
+  onSend?: (message: Message) => void;
 };
 
 export default function ChatWelcome({ onSend }: ChatWelcomeProps) {

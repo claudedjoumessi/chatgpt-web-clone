@@ -1,11 +1,12 @@
 import { ChatWelcome } from "@/components/chat";
+import type { Message } from "@/components/chat/ChatMessage";
 import ChatSession from "@/components/chat/ChatSession";
 import React from "react";
 
 const Chat = () => {
-  const [messages, setMessages] = React.useState<string[]>([]);
+  const [messages, setMessages] = React.useState<Message[]>([]);
 
-  const handleSend = (message: string) => {
+  const handleSend = (message: Message) => {
     setMessages((prev) => [...prev, message]);
     console.log("Message sent:", message);
     

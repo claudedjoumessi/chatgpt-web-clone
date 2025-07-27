@@ -21,17 +21,22 @@ import {
   Mic,
   AudioLines,
 } from "lucide-react";
+import type { Message } from "./ChatMessage";
 
 type ChatInputProps = {
-  onSend?: (message: string) => void;
+  onSend?: (message: Message) => void;
   props?: React.ComponentProps<"textarea">
 };
 
 const ChatInput = ({ onSend, props }: ChatInputProps) => {
-
   const [textAreaVal, setTextAreaVal] = React.useState("");
-
   const textAreaRef = React.useRef<HTMLTextAreaElement>(null);
+
+  const initialMessage: Message = {
+    role: "user",
+    content: textAreaVal,
+    timestamp: (new Date()).toISOString(),
+  }
 
   return (
     <>
@@ -45,7 +50,7 @@ const ChatInput = ({ onSend, props }: ChatInputProps) => {
           onChange={(e) => setTextAreaVal(e.target.value)}
           onKeyUp={(e) => {
             e.key === "Enter" && e.preventDefault();
-            e.key === "Enter" && onSend?.((e.target as HTMLTextAreaElement).value);
+            e.key === "Enter" && onSend?.(initialMessage);
             e.key === "Enter" && setTextAreaVal("");
             textAreaRef.current?.focus()
           }}
