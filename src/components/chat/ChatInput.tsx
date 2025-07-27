@@ -38,6 +38,13 @@ const ChatInput = ({ onSend, props }: ChatInputProps) => {
     timestamp: (new Date()).toISOString(),
   }
 
+  const handleSend = () => {
+    if(textAreaVal.trim() === "") return;
+    onSend?.(initialMessage);
+    setTextAreaVal("");
+    textAreaRef.current?.focus();
+  }
+
   return (
     <>
       <div className="w-full h-full flex">
@@ -49,10 +56,7 @@ const ChatInput = ({ onSend, props }: ChatInputProps) => {
           placeholder="Ask something..."
           onChange={(e) => setTextAreaVal(e.target.value)}
           onKeyUp={(e) => {
-            e.key === "Enter" && e.preventDefault();
-            e.key === "Enter" && onSend?.(initialMessage);
-            e.key === "Enter" && setTextAreaVal("");
-            textAreaRef.current?.focus()
+            e.key === "Enter" && (e.preventDefault(), handleSend())
           }}
           {...props}
         />

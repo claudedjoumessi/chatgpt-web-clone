@@ -10,6 +10,14 @@ const Chat = () => {
     setMessages((prev) => [...prev, message]);
     console.log("Message sent:", message);
     
+    // Simulate sending the message to an API or processing it
+    setTimeout(() => {
+      const reply: Message = {
+        role: "assistant",
+        content: `You said: "${message.content}" 🤖`,
+      };
+      setMessages((prev) => [...prev, reply]);
+    }, 2000);
   };
 
   return (
