@@ -1,4 +1,4 @@
-import { ChatMessage, ChatSidebar, ChatInput } from "@/components/chat";
+import { ChatSidebar, ChatInput, ChatMessageBubble } from "@/components/chat";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,104 +15,15 @@ import {
 } from "@/components/ui/sidebar";
 import { Button } from "../ui/button";
 import { Ellipsis, Upload } from "lucide-react";
-import type { Message } from "./ChatMessage";
+import { type ChatMessage } from "@/hooks/useGroqChat";
 
 type ChatSessionProps = {
-  messages: Message[];
-  onSend?: (message: Message) => void;
+  messages: ChatMessage[];
+  onSend?: (message: ChatMessage) => void;
   isLoading?: boolean;
 };
 
 export default function ChatSession({ messages, onSend, isLoading }: ChatSessionProps) {
-  const fakeMessages: Message[] = [
-    {
-      role: "user",
-      content: "Hello, how can I get GitHub badges?",
-      timestamp: new Date().toISOString(),
-    },
-    {
-      role: "assistant",
-      content:
-        "You can earn GitHub badges by completing various activities on GitHub, such as contributing to repositories, creating issues, and more.",
-      timestamp: new Date().toISOString(),
-    },
-    {
-      role: "user",
-      content: "Can you show me some examples?",
-      timestamp: new Date().toISOString(),
-    },
-    {
-      role: "assistant",
-      content:
-        "Sure! Here are some examples of GitHub badges you can earn:\n\n- First Pull Request\n- First Issue\n- First Commit\n- Repository Starred",
-      timestamp: new Date().toISOString(),
-    },
-    {
-      role: "user",
-      content: "Thanks! How do I get the First Pull Request badge?",
-      timestamp: new Date().toISOString(),
-    },
-    {
-      role: "assistant",
-      content:
-        "To get the First Pull Request badge, you need to create your first pull request on a repository. Once it's merged, you'll receive the badge.",
-      timestamp: new Date().toISOString(),
-    },
-    {
-      role: "user",
-      content: "Great! I'll try that.",
-      timestamp: new Date().toISOString(),
-    },
-    {
-      role: "assistant",
-      content: "Good luck! Let me know if you need any help.",
-      timestamp: new Date().toISOString(),
-    },
-    {
-      role: "user",
-      content: "What about the First Issue badge?",
-      timestamp: new Date().toISOString(),
-    },
-    {
-      role: "assistant",
-      content:
-        "To earn the First Issue badge, you need to create your first issue in a repository. Once it's closed, you'll receive the badge.",
-      timestamp: new Date().toISOString(),
-    },
-    {
-      role: "user",
-      content: "Thanks for the info!",
-      timestamp: new Date().toISOString(),
-    },
-    {
-      role: "assistant",
-      content:
-        "You're welcome! If you have any more questions, feel free to ask.",
-      timestamp: new Date().toISOString(),
-    },
-    {
-      role: "user",
-      content: "How do I get the Repository Starred badge?",
-      timestamp: new Date().toISOString(),
-    },
-    {
-      role: "assistant",
-      content:
-        "To earn the Repository Starred badge, you need to star a repository. Once you've starred your first repository, you'll receive the badge.",
-      timestamp: new Date().toISOString(),
-    },
-    {
-      role: "user",
-      content: "Awesome! Thanks for your help.",
-      timestamp: new Date().toISOString(),
-    },
-    {
-      role: "assistant",
-      content: "No problem! Happy coding!",
-      timestamp: new Date().toISOString(),
-    },
-  ];
-
   return (
     <SidebarProvider>
       <ChatSidebar />
@@ -176,7 +87,7 @@ export default function ChatSession({ messages, onSend, isLoading }: ChatSession
               className="max-w-2xl h-full w-full flex flex-col gap-8 pb-5"
             >
               {messages.map((message, index) => (
-                <ChatMessage
+                <ChatMessageBubble
                   key={index}
                   role={message.role}
                   content={message.content}

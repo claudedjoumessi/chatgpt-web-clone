@@ -21,32 +21,31 @@ import {
   Mic,
   AudioLines,
 } from "lucide-react";
-import type { Message } from "./ChatMessage";
+import { type ChatMessage } from "@/hooks/useGroqChat";
 
 type ChatInputProps = {
-  onSend?: (message: Message) => void;
+  onSend?: (message: ChatMessage) => void;
   loading?: boolean;
   // Additional props for the textarea
-  props?: React.ComponentProps<"textarea">
+  props?: React.ComponentProps<"textarea">;
 };
 
 const ChatInput = ({ onSend, loading, props }: ChatInputProps) => {
   const [textAreaVal, setTextAreaVal] = React.useState("");
   const textAreaRef = React.useRef<HTMLTextAreaElement>(null);
 
-  const initialMessage: Message = {
+  const initialMessage: ChatMessage = {
     role: "user",
     content: textAreaVal,
-    timestamp: (new Date()).toISOString(),
-  }
+  };
 
   const handleSend = () => {
-    if(textAreaVal.trim() === "") return;
+    if (textAreaVal.trim() === "") return;
     setTextAreaVal("");
     textAreaRef.current?.focus();
-    
+
     onSend?.(initialMessage);
-  }
+  };
 
   return (
     <>
@@ -59,7 +58,7 @@ const ChatInput = ({ onSend, loading, props }: ChatInputProps) => {
           placeholder="Ask something..."
           onChange={(e) => setTextAreaVal(e.target.value)}
           onKeyUp={(e) => {
-            e.key === "Enter" && (e.preventDefault(), handleSend())
+            e.key === "Enter" && (e.preventDefault(), handleSend());
           }}
           {...props}
         />

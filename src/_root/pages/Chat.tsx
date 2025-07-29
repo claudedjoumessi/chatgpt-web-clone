@@ -1,26 +1,28 @@
 import { ChatWelcome } from "@/components/chat";
-import type { Message } from "@/components/chat/ChatMessage";
+import { type ChatMessage, useGroqChat } from "@/hooks/useGroqChat";
 import ChatSession from "@/components/chat/ChatSession";
 import React from "react";
 
 const Chat = () => {
-  const [messages, setMessages] = React.useState<Message[]>([]);
+  const [messages, setMessages] = React.useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
+  const { sendMessage } = useGroqChat();
 
-  const handleSend = (message: Message) => {
-    setMessages((prev) => [...prev, message]);
+  const handleSend = async (message: ChatMessage) => {
+
+    const userMessage: ChatMessage = { role: "user", content: message.content };
+    const newMessages = [...messages, userMessage];
+
+    setMessages(newMessages);
     setIsLoading(true);
-    console.log("Message sent:", message);
-    
-    // Simulate sending the message to an API or processing it
-    setTimeout(() => {
-      const reply: Message = {
-        role: "assistant",
-        content: `You said: "${message.content}" 🤖`,
-      };
-      setMessages((prev) => [...prev, reply]);
+    const assistantReply = await sendMessage(newMessages);
+    if (assistantReply) {
+      setMessages([
+        ...newMessages,
+        { role: "assistant", content: assistantReply },
+      ]);
       setIsLoading(false);
-    }, 2500);
+    }
   };
 
   return (
@@ -28,7 +30,11 @@ const Chat = () => {
       {messages.length === 0 ? (
         <ChatWelcome onSend={handleSend} />
       ) : (
-        <ChatSession messages={messages} onSend={handleSend} isLoading={isLoading} />
+        <ChatSession
+          messages={messages}
+          onSend={handleSend}
+          isLoading={isLoading}
+        />
       )}
     </>
   );

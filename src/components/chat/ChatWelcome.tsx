@@ -13,14 +13,11 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import {
-  Ellipsis,
-  Upload,
-} from "lucide-react";
+import { Ellipsis, Upload } from "lucide-react";
 import { Button } from "../ui/button";
 import React from "react";
 import ChatInput from "./ChatInput";
-import type { Message } from "./ChatMessage";
+import type { Message } from "./ChatMessageBubble";
 
 type ChatWelcomeProps = {
   onSend?: (message: Message) => void;

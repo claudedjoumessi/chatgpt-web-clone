@@ -1,16 +1,9 @@
-import { cn } from "@/lib/utils";
 import React from "react";
+import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import type { ChatMessage } from "@/hooks/useGroqChat";
 
-export type ChatRole = "user" | "assistant";
-
-export type Message = {
-  role: ChatRole;
-  content: string;
-  timestamp?: string;
-};
-
-const ChatMessage = ({ role, content, timestamp }: Message) => {
+const ChatMessageBubble = ({ role, content }: ChatMessage) => {
   return (
     <div
       className={`${cn(
@@ -20,7 +13,7 @@ const ChatMessage = ({ role, content, timestamp }: Message) => {
     >
       {role === "assistant" ? (
         <Avatar
-          className={"h-full mt-6 absolute left-[-32px] flex items-start"}
+          className={"h-full mt-7 absolute left-[-32px] flex items-start"}
         >
           <AvatarImage
             src="/assets/images/chatgpt-icon.svg"
@@ -34,8 +27,8 @@ const ChatMessage = ({ role, content, timestamp }: Message) => {
       )}
       <div
         className={`${cn(
-          "px-5 py-2.5 rounded-2xl max-w-lg",
-          role === "user" ? "bg-neutral-800 max-w-lg" : ""
+          "px-5 py-2.5 rounded-2xl",
+          role === "user" ? "bg-neutral-800 max-w-lg" : "max-w-xl"
         )}`}
       >
         <span>{content}</span>
@@ -44,4 +37,4 @@ const ChatMessage = ({ role, content, timestamp }: Message) => {
   );
 };
 
-export default ChatMessage;
+export default ChatMessageBubble;
